@@ -4,6 +4,7 @@ import { TbMessage2Question, TbUserCheck } from "react-icons/tb";
 import { MdQuiz, MdGolfCourse } from "react-icons/md";
 import { VscTypeHierarchy } from "react-icons/vsc";
 import { LuUserCheck } from "react-icons/lu";
+import { LuPackageCheck } from "react-icons/lu";
 
 
 
@@ -28,6 +29,10 @@ import { LuUserCheck } from "react-icons/lu";
                 name: 'Car',
                 icon: <IoIosCar />,
               },
+              {
+                name: 'Package',
+                icon: <LuPackageCheck/> 
+              }
             ],
           },
           {

@@ -10,7 +10,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const navigate = useNavigate()
-    
+
     const handleLogin = async (e) => {
         e.preventDefault();
         console.log(email);
@@ -36,6 +36,7 @@ const Login = () => {
                 });
             } else {
                 setActiveLogin(!activeLogin)
+                localStorage.setItem("jwt", getUser?.data.accessToken)
                 navigate("/main")
             }
         } catch (error) {
@@ -88,7 +89,7 @@ const Login = () => {
                                     Login
                                 </button>
                             </div>
-                       
+
                         </form>
                         <ToastContainer
                             position="bottom-right"

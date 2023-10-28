@@ -7,4 +7,6 @@ export { default as Quiz } from './Quiz';
 export { default as QuestionBank } from './QuestionBank';
 export { default as LicenseApplication } from './LicenseApplication';
 export { default as MentorApplication } from './MentorApplication';
+export { default as Header } from './Header';
+export { default as Package } from './Package';
 

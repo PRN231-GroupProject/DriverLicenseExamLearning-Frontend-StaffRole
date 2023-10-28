@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login, Main } from "./pages";
 import React from 'react'
 import { UseStateContext } from "./context/ContextProvider";
-import { Sidebar, Navbar,Member, Mentor , Car, QuestionBank ,Quiz, MentorApplication ,LicenseApplication} from "./components";
+import { Sidebar, Navbar,Member, Mentor , Car, QuestionBank ,Quiz, MentorApplication ,LicenseApplication, Package} from "./components";
 const App = () => {
 
   const { activeMenu, activeLogin } = UseStateContext()
@@ -33,6 +33,7 @@ const App = () => {
                   <Route path='/QuestionBank' element={(<QuestionBank />)} />
                   <Route path='/MentorApplication' element={(<MentorApplication />)} />
                   <Route path='/LicenseApplication' element={(<LicenseApplication />)} />
+                  <Route path='/Package' element={(<Package />)} />
                   
                 </Routes>
               </div>
