@@ -2,13 +2,15 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login, Main } from "./pages";
 import React from 'react'
 import { UseStateContext } from "./context/ContextProvider";
-import { Sidebar, Navbar,Member, Mentor , Car, QuestionBank ,Quiz, MentorApplication ,LicenseApplication, Package} from "./components";
+import { Sidebar, Navbar,Member, Mentor , Car, QuestionBank ,Quiz, MentorApplication ,LicenseApplication, Package, AddQuestion, AddSingleQuestion} from "./components";
+import CartProvider from  './context/CartContextProvider';
 const App = () => {
 
   const { activeMenu, activeLogin } = UseStateContext()
 
   return (
     <div>
+      <CartProvider>
       <BrowserRouter>
         {activeLogin ? (
           <Routes>
@@ -34,12 +36,15 @@ const App = () => {
                   <Route path='/MentorApplication' element={(<MentorApplication />)} />
                   <Route path='/LicenseApplication' element={(<LicenseApplication />)} />
                   <Route path='/Package' element={(<Package />)} />
+                  <Route path='/AddSingleQuestion' element={(<AddSingleQuestion />)} />
+                  <Route path='/AddQuestion' element={(<AddQuestion />)} />
                   
                 </Routes>
               </div>
             </div>
         )}
       </BrowserRouter>
+      </CartProvider>
     </div>
   )
 }

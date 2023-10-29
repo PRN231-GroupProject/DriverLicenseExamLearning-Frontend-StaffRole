@@ -1,13 +1,68 @@
-import React, { useState } from 'react'
-import { Dropdown } from "flowbite-react";
+import React, { useContext, useState } from 'react'
 import { Header } from "../components";
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
+import { FcAddDatabase, FcDeleteDatabase } from "react-icons/fc";
+import { MdOutlineAdd } from "react-icons/md";
+import { Link, Navigate } from 'react-router-dom';
+import { IoCreateSharp } from "react-icons/io5";
+import ExamContext from "../context/ExamContextProvider";
 const QuestionBank = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const exam = useContext(ExamContext);
+
+
+  const [formData, setFormData] = useState({
+    question: '',
+    option1: '',
+    option2: '',
+    option3: '',
+    option4: '',
+    answer: '',
+    licenseType: '',
+    isParalysis: '',
+    image: ''
+  })
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    exam.addQuestionToCart(formData)
+  }
+
+
+
   return (
-    <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+    <div className='m-2 md:m-10  md:p-10 bg-white rounded-3xl'>
       <Header category="Page" title="Question Bank">
       </Header>
+      <div className='w-full pb-4'>
+        <Link to="/AddSingleQuestion">
+          <button type="button" className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2">
+            <div className='pr-4'>
+              <IoCreateSharp />
+            </div>
+            Add New Question
+          </button>
+        </Link>
+      </div>
+      <div className='w-full pb-4'>
+        <Link to="/AddQuestion">
+          <button type="button" className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2">
+            <div className='pr-4'>
+              <FcAddDatabase />
+            </div>
+            Create New Quiz
+          </button>
+        </Link>
+      </div>
+
       <div className="flex items-center justify-between pb-4 bg-white dark:bg-gray-900">
         <div className='relative flex flex-col items-center  rounded-lg ' >
           <button
@@ -75,10 +130,16 @@ const QuestionBank = () => {
               A2
             </td>
             <td className="px-6 py-4">
-              toi tin 
+              toi tin
             </td>
             <td className="px-6 py-4">
               <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Detail</a>
+              <a>
+                <MdOutlineAdd />
+              </a>
+              <a>
+                <FcDeleteDatabase />
+              </a>
             </td>
           </tr>
         </tbody>

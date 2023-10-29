@@ -9,4 +9,6 @@ export { default as LicenseApplication } from './LicenseApplication';
 export { default as MentorApplication } from './MentorApplication';
 export { default as Header } from './Header';
 export { default as Package } from './Package';
-
+export { default as AddSingleQuestion } from './AddSingleQuestion';
+export { default as AddQuestion } from './AddQuestion';
+export {default as CartQuestionBank } from '../components/Cart/CartQuestionBank'
