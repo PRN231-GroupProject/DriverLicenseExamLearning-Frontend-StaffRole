@@ -1,12 +1,29 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Header } from "../components";
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 import { FcAddDatabase, FcDeleteDatabase } from "react-icons/fc";
 import { MdOutlineAdd } from "react-icons/md";
 import { Link, Navigate } from 'react-router-dom';
 import { IoCreateSharp } from "react-icons/io5";
-import ExamContext from "../context/ExamContextProvider";
+import { ExamContext } from "../context/ExamContextProvider";
+import axios from '../api/axios';
 const QuestionBank = () => {
+  //? Fetch data in api 
+  const [Questions, setQuestions] = useState([])
+  const getQuestionBanks = async () => {
+    const jwt = localStorage.getItem("jwt");
+    const responseQuestionBanks = await axios.get("questionbank", {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`
+      }
+    });
+    setQuestions(responseQuestionBanks.data);
+  }
+  useEffect(() => {
+    getQuestionBanks();
+  }, []);
+  console.log(Questions);
   const [isOpen, setIsOpen] = useState(false)
   const exam = useContext(ExamContext);
 
@@ -32,13 +49,16 @@ const QuestionBank = () => {
 
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    exam.addQuestionToCart(formData)
+    console.log(e)
+
+
+    // exam.addQuestionToExam(formData)
   }
 
 
 
   return (
+
     <div className='m-2 md:m-10  md:p-10 bg-white rounded-3xl'>
       <Header category="Page" title="Question Bank">
       </Header>
@@ -119,29 +139,37 @@ const QuestionBank = () => {
           </tr>
         </thead>
         <tbody>
-          <tr key="1" className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              1
-            </td>
-            <td className="px-6 py-4">
-              Toi tin minh dang
-            </td>
-            <td className="px-6 py-4">
-              A2
-            </td>
-            <td className="px-6 py-4">
-              toi tin
-            </td>
-            <td className="px-6 py-4">
-              <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Detail</a>
-              <a>
-                <MdOutlineAdd />
-              </a>
-              <a>
-                <FcDeleteDatabase />
-              </a>
-            </td>
-          </tr>
+          {Questions.map((licensetype) => (
+            licensetype.questions.map((question, index) => (
+              <tr key={index} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" >
+                  {question.questionId}
+                </td>
+                <td className="px-6 py-4" name="question" value>
+                  {question.text}
+                </td>
+                <td className="px-6 py-4">
+                  {question.licenseTypeId}
+                </td>
+                <td className="px-6 py-4">
+                  {question.answer}
+                </td>
+                <td className="px-6 py-4">
+                  <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Detail</a>
+                  <a
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    onClick={() => handleSubmit('toi tin minh dang')}
+                  >
+                    Add To Bank
+                    <MdOutlineAdd />
+                  </a>
+                  <a>
+                    <FcDeleteDatabase />
+                  </a>
+                </td>
+              </tr>
+            ))
+          ))}
         </tbody>
       </table>
 

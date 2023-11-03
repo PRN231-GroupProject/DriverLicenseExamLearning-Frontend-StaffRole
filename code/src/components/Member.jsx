@@ -1,68 +1,168 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header } from "../components";
+import axios from "../api/axios";
+import { AiFillDelete } from "react-icons/ai";
+import { CgDetailsMore } from "react-icons/cg";
+import { GrUpdate } from "react-icons/gr";
+import { Button, Modal } from 'react-bootstrap';
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 //?Just take member have roleId = 4
 //* https://www.driverlicenseexamlearning.somee.com/api/user?filter=%20roleId%20eq%204
 const Member = () => {
+    const navigate = useNavigate();
+    const [isDeletedID, setIsDeleteID] = useState();
+    const [Members, setMembers] = useState([]);
+    const [showModal, setShow] = useState(false);
+    const getMentor = async () => {
+        const jwt = localStorage.getItem("jwt");
+        const responseMember = await axios.get("user?filter=%20roleId%20eq%204", {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${jwt}`
+            }
+        });
 
+        setMembers(responseMember.data);
+    }
+    useEffect(() => {
+        getMentor()
+    }, [])
+    console.log(Members)
+    const handleClose = () => {
+        console.log('close')
+        setShow(false)
+    };
+    const handleShow = () => setShow(true);
+    const handleDelete = (e) => {
+        handleShow();
+        setIsDeleteID(e);
+        console.log('Delete function' + e)
+    }
+
+    const acceptConfirmDetele = () => {
+
+        toast.success('🦄 Wow so easy!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        handleClose();
+    }
     return (
-        <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
-            <Header category="Page" title="Mentor">
-            </Header>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                                ID
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                User Name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Email
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Phone Number
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Status
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr key="1" className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                1
-                            </td>
-                            <td className="px-6 py-4">
-                                1000
-                            </td>
-                            <td className="px-6 py-4">
-                                24/12
-                            </td>
-                            <td className="px-6 py-4">
-                                24/12
-                            </td>
-                            <td className="px-6 py-4">
-                                24/12
-                            </td>
-                            <td className="px-6 py-4">
-                                24/12
-                            </td>
-                            <td className="px-6 py-4">
-                                <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Detail</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+        <>
+            <Modal show={showModal} onClick={handleShow}>
+                <Modal.Header closeButton>
+                    <Modal.Title>
+                        Delete User
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Do you really want to ban this use !!!!
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant='secondary' onClick={() => handleClose()}>
+                        Close
+                    </Button>
+                    <Button variant='primary' onClick={acceptConfirmDetele}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+                <Header category="Page" title="Mentor">
+                </Header>
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    ID
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    User Name
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Name
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Email
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Phone Number
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Status
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Members.map((member, index) => (
+                                <tr key={index} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {member.userId}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {member.userName}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {member.name}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {member.email}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {member.phoneNumber}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        {member.status}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <button className='btn btn-warning' onClick={() => {
+                                            navigate("/UpdateMember", { state: { object: member } })
+                                        }}>
+                                            <GrUpdate />
+                                        </button>
+                                        <button className='btn btn-info' onClick={() => {
+                                            navigate("/ViewMemberDetail", { state: { id: member.userId } })
+                                        }}>
+                                            <CgDetailsMore />
+                                        </button>
+                                        <button className='btn btn-danger ' onClick={() => handleDelete(member.userId)}>
+                                            <AiFillDelete />
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            {/* Same as */}
+            <ToastContainer />
+        </>
     )
 }
 

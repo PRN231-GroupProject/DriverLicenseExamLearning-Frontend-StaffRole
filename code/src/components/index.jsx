@@ -12,3 +12,9 @@ export { default as Package } from './Package';
 export { default as AddSingleQuestion } from './AddSingleQuestion';
 export { default as AddQuestion } from './AddQuestion';
 export {default as CartQuestionBank } from '../components/Cart/CartQuestionBank'
+export {default as ViewMemberDetail } from '../components/ViewMemberDetail'
+export {default as UpdateMember } from '../components/UpdateMember'
+export {default as UpdateCar } from '../components/UpdateCar'
+export {default as AddNewCar } from '../components/AddNewCar'
+export {default as AddNewPackage } from '../components/AddNewPackage'
+export {default as MemberTransactionDetail} from '../components/MemberTransactionDetail'

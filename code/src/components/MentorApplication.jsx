@@ -1,5 +1,7 @@
 import React from 'react'
 import { Header } from '../components'
+import { CgDetailsMore } from "react-icons/cg";
+;
 const MentorApplication = () => {
   return (
     <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
@@ -41,7 +43,9 @@ const MentorApplication = () => {
                 comsuonhocmon@gmail.com
               </td>
               <td className="px-6 py-4">
-                <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Detail</a>
+                <button className='btn btn-info' >
+                  <CgDetailsMore />
+                </button>
               </td>
             </tr>
           </tbody>

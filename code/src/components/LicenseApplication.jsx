@@ -1,5 +1,6 @@
 import React from 'react'
 import { Header } from "../components";
+import { CgDetailsMore } from "react-icons/cg";
 
 const LicenseApplication = () => {
   return (
@@ -42,7 +43,9 @@ const LicenseApplication = () => {
                 Processing
               </td>
               <td className="px-6 py-4">
-                <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Detail</a>
+              <button className='btn btn-info' >
+                    <CgDetailsMore />
+                  </button>
               </td>
             </tr>
           </tbody>
