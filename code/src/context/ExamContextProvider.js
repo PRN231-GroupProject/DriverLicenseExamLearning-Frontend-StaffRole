@@ -9,16 +9,29 @@ export const ExamContext = createContext({
     deleteFromCart: () => { },
     getTotalCart: () => { },
     addQuestionToExam: () => { },
-    CheckQuestionHaveInList: () => { }
+    CheckQuestionHaveInList: () => { },
+    getLicenseType: () => { },
+    setLicenseType: () => { },
+
 });
 
 
 export function ExamProvider({ children }) {
-
+    const [licenseTypeID, setLicenseTypeID] = useState('com suon');
     const [cartProducts, setCartProducts] = useState([]);
 
+
+    function getLicenseType() {
+
+        return licenseTypeID
+    }
+
+    function setLicenseType(licenseType) {
+        console.log(licenseType);
+        setLicenseTypeID(licenseType);
+    }
     function CheckQuestionHaveInCart(questionInput) {
-        const checkQuestion = cartProducts.find(question => question.question.question === questionInput)?.question.question;
+        const checkQuestion = cartProducts.find(question => question.question.text === questionInput)?.question.text;
         if (checkQuestion == null) {
             return 0;
 
@@ -26,23 +39,10 @@ export function ExamProvider({ children }) {
         return 1
     }
     function addQuestionToExam(question) {
-
-        const check = CheckQuestionHaveInCart(question.question);
-        if (check == 0) {
-
-            console.log(question)
-            setCartProducts(
-                [
-                    ...cartProducts,
-                    {
-                        question: question,
-                        quantity: 1
-                    }
-                ]
-            )
-        }else {
-
-            toast.error('🦄 This question already have in cart', {
+        console.log(question)
+        
+        if (licenseTypeID != question.licenseTypeId) {
+            toast.error('🦄 Set License Type First Or You Add have another License Type ', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -51,16 +51,38 @@ export function ExamProvider({ children }) {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
+            });
+
+        } else {
+            const check = CheckQuestionHaveInCart(question.text);
+            if (check == 0) {
+
+                console.log(question)
+                setCartProducts(
+                    [
+                        ...cartProducts,
+                        {
+                            question: question,
+                            quantity: 1
+                        }
+                    ]
+                )
+            } else {
+
+                toast.error('🦄 This question already have in cart', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
                 });
-       
-       
-       
             }
-        // const location = useLocation()
-        // const state = location.state
 
 
-
+        }
     }
 
 
@@ -83,7 +105,7 @@ export function ExamProvider({ children }) {
         setCartProducts(
             cartProducts =>
                 cartProducts.filter(currentProduct => {
-                    return currentProduct.question != question
+                    return currentProduct.question.text != question
                 }))
     }
     const contextValue = {
@@ -92,7 +114,9 @@ export function ExamProvider({ children }) {
         deleteFromCart,
         getTotalCart,
         addQuestionToExam,
-        CheckQuestionHaveInCart
+        CheckQuestionHaveInCart,
+        getLicenseType,
+        setLicenseType
     }
     return (
         <ExamContext.Provider value={contextValue}>

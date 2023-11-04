@@ -3,9 +3,11 @@ import { Header } from "../components";
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 import { FcAddDatabase, FcDeleteDatabase } from "react-icons/fc";
 import { MdOutlineAdd } from "react-icons/md";
+import { CgDetailsMore } from "react-icons/cg";
 import { Link, Navigate } from 'react-router-dom';
 import { IoCreateSharp } from "react-icons/io5";
 import { ExamContext } from "../context/ExamContextProvider";
+import { ToastContainer } from "react-toastify";
 import axios from '../api/axios';
 const QuestionBank = () => {
   //? Fetch data in api 
@@ -49,10 +51,10 @@ const QuestionBank = () => {
 
 
   const handleSubmit = (e) => {
+
+
     console.log(e)
-
-
-    // exam.addQuestionToExam(formData)
+    exam.addQuestionToExam(e)
   }
 
 
@@ -155,24 +157,37 @@ const QuestionBank = () => {
                   {question.answer}
                 </td>
                 <td className="px-6 py-4">
-                  <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Detail</a>
-                  <a
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    onClick={() => handleSubmit('toi tin minh dang')}
+                  <button className='btn btn-success'>
+                    <CgDetailsMore />
+                  </button>
+                  <button className='btn btn-info'
+                    onClick={() => handleSubmit(question)}
                   >
-                    Add To Bank
                     <MdOutlineAdd />
-                  </a>
-                  <a>
+                  </button>
+                  <button className='btn btn-danger'>
                     <FcDeleteDatabase />
-                  </a>
+                  </button>
                 </td>
               </tr>
             ))
           ))}
         </tbody>
       </table>
-
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
     </div>
 
   )

@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { GrStorage } from "react-icons/gr";
 import { Modal } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 import { QuestionContext } from '../context/CartContextProvider'
 import { Link, useLocation } from "react-router-dom";
 import CartQuestionBank from "../components/Cart/CartQuestionBank";
-import { ToastContainer } from "react-toastify";
+import axios from '../api/axios';
 
 function AddSingleQuestion() {
 
@@ -14,16 +15,59 @@ function AddSingleQuestion() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const questionCount = cart.items.reduce((sum, question) => sum += question.quantity, 0);
+    const submit = async () => {
+        const list = [];
+        const jwt = localStorage.getItem("jwt");
+        const count = questionCount;
+        for (let index = 0; index < count; index++) {
+            console.log(index)
+            cart.items[index].question.paralysisQuestion = JSON.parse(cart.items[index].question.paralysisQuestion)
+            cart.items[index].question.licenseTypeId = parseInt(cart.items[index].question.licenseTypeId)
+            const newQuest =
+            {
+                text: cart.items[index].question.text,
+                Options1: cart.items[index].question.Options1,
+                Options2: cart.items[index].question.Options2,
+                Options3: cart.items[index].question.Options3,
+                Options4: cart.items[index].question.Options4,
+                answer: cart.items[index].question.answer,
+                licenseTypeId: cart.items[index].question.licenseTypeId,
+                paralysisQuestion: cart.items[index].question.paralysisQuestion,
+                image: cart.items[index].question.image,
+            }
+            list.push(newQuest);
 
+        }
+        console.log(list)
+        const responseAddQuestion = await axios.post("/questionbank", list, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${jwt}`
+            },
+
+        });
+        if (responseAddQuestion.status == 200) {
+            toast.success('🦄  Add Question Successfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    }
     const [formData, setFormData] = useState({
-        question: '',
-        option1: '',
-        option2: '',
-        option3: '',
-        option4: '',
+        text: '',
+        Options1: '',
+        Options2: '',
+        Options3: '',
+        Options4: '',
         answer: '',
-        licenseType: '',
-        isParalysis: '',
+        licenseTypeId: '',
+        paralysisQuestion: Boolean,
         image: ''
     })
     const handleChange = (e) => {
@@ -31,17 +75,12 @@ function AddSingleQuestion() {
         setFormData({ ...formData, [name]: value });
 
     };
-
-
-
     const handleSubmit = (e) => {
         console.log(formData);
         e.preventDefault();
         cart.addQuestionToCart(formData)
         console.log(cart.items)
     }
-
-
     return (
         <>
             <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
@@ -55,8 +94,8 @@ function AddSingleQuestion() {
                                     <input
                                         onChange={handleChange}
                                         type="text"
-                                        name="question"
-                                        value={formData.question}
+                                        name="text"
+                                        value={formData.text}
                                         id="name"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type question"
@@ -66,11 +105,11 @@ function AddSingleQuestion() {
                                     <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Option 1</label>
                                     <input
                                         type="text"
-                                        name="option1"
+                                        name="Options1"
                                         id="brand"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         onChange={handleChange}
-                                        value={formData.option1}
+                                        value={formData.Options1}
                                         placeholder="Type Option 1"
                                         required="" />
                                 </div>
@@ -78,36 +117,36 @@ function AddSingleQuestion() {
                                     <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Option 2</label>
                                     <input
                                         type="text"
-                                        name="option2"
+                                        name="Options2"
                                         id="price"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type Option 2"
                                         required=""
                                         onChange={handleChange}
-                                        value={formData.option2} />
+                                        value={formData.Options2} />
                                 </div>
                                 <div class="w-full">
                                     <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Option 3</label>
                                     <input
                                         type="text"
-                                        name="option3"
+                                        name="Options3"
                                         id="brand"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type Option 3"
                                         required=""
                                         onChange={handleChange}
-                                        value={formData.option3} />
+                                        value={formData.Options3} />
                                 </div>
                                 <div class="w-full">
                                     <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Option 4</label>
                                     <input type="text"
-                                        name="option4"
+                                        name="Options4"
                                         id="price"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         placeholder="Type Option 4"
                                         required=""
                                         onChange={handleChange}
-                                        value={formData.option4} />
+                                        value={formData.Options4} />
                                 </div>
                                 <div class="w-full">
                                     <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Answer</label>
@@ -124,23 +163,30 @@ function AddSingleQuestion() {
                                     <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                                     <select
                                         id="category"
-                                        name='licenseType'
+                                        name='licenseTypeId'
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                         required=""
                                         onChange={handleChange}
                                     >
-                                        <option selected="" value={formData.licenseType}>Select license type </option>
-                                        <option value="A1">A1</option>
-                                        <option value="A2">A2</option>
-                                        <option value="A2">B1</option>
+                                        <option selected="" value={formData.licenseTypeId}>Select license type </option>
+                                        <option value="1">A1</option>
+                                        <option value="2">A2</option>
+                                        <option value="3">B1</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Paralysis Question</label>
-                                    <select id="category" name='isParalysis' class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                        <option selected="" value={formData.isParalysis}>Is Paralysis Question </option>
-                                        <option value="True">True</option>
-                                        <option value="False">False</option>
+                                    <select
+                                        id="category"
+                                        name='paralysisQuestion'
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        onChange={handleChange}
+                                        required=""
+                                        type='Boolean'
+                                    >
+                                        <option selected="" value={formData.paralysisQuestion}>Is Paralysis Question </option>
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
                                     </select>
                                 </div>
                                 <div classNames="sm:col-span-2">
@@ -200,6 +246,11 @@ function AddSingleQuestion() {
                             <CartQuestionBank key={idx} question={currentQuestion.question} ></CartQuestionBank>
                         ))}
                         <h1>Total: {questionCount}</h1>
+                        <h1>
+                            <button className='btn btn-success' onClick={submit}>
+                                Submit
+                            </button>
+                        </h1>
                     </> :
                         <h1>Not Question add in bank yet</h1>}
                 </Modal.Body>

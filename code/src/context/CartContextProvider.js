@@ -18,7 +18,7 @@ export function CartProvider({ children }) {
     const [cartProducts, setCartProducts] = useState([]);
 
     function CheckQuestionHaveInCart(questionInput) {
-        const checkQuestion = cartProducts.find(question => question.question.question === questionInput)?.question.question;
+        const checkQuestion = cartProducts.find(question => question.question.text === questionInput)?.question.text;
         if (checkQuestion == null) {
             return 0;
 
@@ -27,7 +27,7 @@ export function CartProvider({ children }) {
     }
     function addQuestionToCart(question) {
 
-        const check = CheckQuestionHaveInCart(question.question);
+        const check = CheckQuestionHaveInCart(question.text);
         if (check == 0) {
 
             console.log(question)
@@ -79,11 +79,11 @@ export function CartProvider({ children }) {
 
 
     function deleteFromCart(question) {
-        console.log(question)
+        console.log('delete from cart' + question)
         setCartProducts(
             cartProducts =>
                 cartProducts.filter(currentProduct => {
-                    return currentProduct.question != question
+                    return currentProduct.question.text != question
                 }))
     }
     const contextValue = {
