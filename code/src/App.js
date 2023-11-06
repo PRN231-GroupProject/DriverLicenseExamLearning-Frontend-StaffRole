@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login, Main } from "./pages";
 import React from 'react'
 import { UseStateContext } from "./context/ContextProvider";
-import { Sidebar, Navbar, Member, Mentor, Car, QuestionBank, Quiz, MentorApplication, LicenseApplication, Package, AddQuestion, AddSingleQuestion, ViewMemberDetail, UpdateMember, UpdateCar, AddNewCar, AddNewPackage } from "./components";
+import { Sidebar, Navbar, Member, Mentor, Car, QuestionBank, Quiz, MentorApplication, LicenseApplication, Package, AddQuestion, AddSingleQuestion, ViewMemberDetail, UpdateMember, UpdateCar, AddNewCar, AddNewPackage, MentorApplicationDetail, LicenseApplicationDetail } from "./components";
 import CartProvider from './context/CartContextProvider';
 import ExamProvider from "./context/ExamContextProvider";
 const App = () => {
@@ -45,6 +45,8 @@ const App = () => {
                     <Route path='/UpdateCar' element={(<UpdateCar />)} />
                     <Route path='/AddNewCar' element={(<AddNewCar />)} />
                     <Route path='/AddNewPackage' element={(<AddNewPackage />)} />
+                    <Route path='/MentorApplicationDetail' element={(<MentorApplicationDetail />)} />
+                    <Route path='/LicenseApplicationDetail' element={(<LicenseApplicationDetail />)} />
 
                   </Routes>
                 </div>

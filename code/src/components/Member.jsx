@@ -40,9 +40,11 @@ const Member = () => {
         console.log('Delete function' + e)
     }
 
-    const acceptConfirmDetele = () => {
+    const acceptConfirmDelete =  async () => {
 
-        toast.success('🦄 Wow so easy!', {
+        const jwt = localStorage.getItem("jwt");
+        const responseDeleteMember =  await axios.delete("")
+        toast.success('🦄 Delete Successfully!', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -57,7 +59,7 @@ const Member = () => {
     return (
 
         <>
-            <Modal show={showModal} onClick={handleShow}>
+            <Modal show={showModal} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         Delete User
@@ -70,9 +72,9 @@ const Member = () => {
                     <Button variant='secondary' onClick={() => handleClose()}>
                         Close
                     </Button>
-                    <Button variant='primary' onClick={acceptConfirmDetele}>
+                    <button  className='btn btn-danger' onClick={acceptConfirmDelete}>
                         Delete
-                    </Button>
+                    </button>
                 </Modal.Footer>
             </Modal>
             <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>

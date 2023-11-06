@@ -11,7 +11,7 @@ function AddSingleQuestion() {
 
     const cart = useContext(QuestionContext);
     console.log(cart.items)
-    const [showCart, setShow] = useState(true);
+    const [showCart, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const questionCount = cart.items.reduce((sum, question) => sum += question.quantity, 0);

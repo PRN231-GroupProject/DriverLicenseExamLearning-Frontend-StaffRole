@@ -18,3 +18,6 @@ export {default as UpdateCar } from '../components/UpdateCar'
 export {default as AddNewCar } from '../components/AddNewCar'
 export {default as AddNewPackage } from '../components/AddNewPackage'
 export {default as MemberTransactionDetail} from '../components/MemberTransactionDetail'
+export {default as MentorApplicationDetail} from '../components/MentorApplicationDetail'
+export {default as LicenseApplicationDetail} from '../components/LicenseApplicationDetail'
+
