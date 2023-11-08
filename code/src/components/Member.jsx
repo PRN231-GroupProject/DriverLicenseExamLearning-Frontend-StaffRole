@@ -40,21 +40,40 @@ const Member = () => {
         console.log('Delete function' + e)
     }
 
-    const acceptConfirmDelete =  async () => {
+    const acceptConfirmDelete = async () => {
+
+        let deleteData = {
+
+            "accountId": parseInt(isDeletedID),
+            "reason": 'com suon hoc mon'
+
+
+        }
+
+        console.log(deleteData)
 
         const jwt = localStorage.getItem("jwt");
-        const responseDeleteMember =  await axios.delete("")
-        toast.success('🦄 Delete Successfully!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
+        const responseCar = await axios.delete("user", { data: { "accountId": parseInt(isDeletedID), "reason": "com suon hoc mon" } }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${jwt}`
+            }
         });
-        handleClose();
+
+        if (responseCar.status == 200) {
+
+            toast.success('🦄 Delete Successfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            handleClose();
+        }
     }
     return (
 
@@ -72,7 +91,7 @@ const Member = () => {
                     <Button variant='secondary' onClick={() => handleClose()}>
                         Close
                     </Button>
-                    <button  className='btn btn-danger' onClick={acceptConfirmDelete}>
+                    <button className='btn btn-danger' onClick={acceptConfirmDelete}>
                         Delete
                     </button>
                 </Modal.Footer>
@@ -128,13 +147,9 @@ const Member = () => {
                                     <td className="px-6 py-4">
                                         {member.status}
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <button className='btn btn-warning' onClick={() => {
-                                            navigate("/UpdateMember", { state: { object: member } })
-                                        }}>
-                                            <GrUpdate />
-                                        </button>
-                                        <button className='btn btn-info' onClick={() => {
+                                    <td className="px-6 py-4  flex gap-3">
+                                        
+                                        <button className='btn btn-info  ' onClick={() => {
                                             navigate("/ViewMemberDetail", { state: { id: member.userId } })
                                         }}>
                                             <CgDetailsMore />
@@ -142,7 +157,6 @@ const Member = () => {
                                         <button className='btn btn-danger ' onClick={() => handleDelete(member.userId)}>
                                             <AiFillDelete />
                                         </button>
-
                                     </td>
                                 </tr>
                             ))}

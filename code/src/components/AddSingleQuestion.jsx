@@ -33,7 +33,7 @@ function AddSingleQuestion() {
                 answer: cart.items[index].question.answer,
                 licenseTypeId: cart.items[index].question.licenseTypeId,
                 paralysisQuestion: cart.items[index].question.paralysisQuestion,
-                image: cart.items[index].question.image,
+                image: cart.items[index].question.image.substring(12).toString(),
             }
             list.push(newQuest);
 
@@ -57,6 +57,7 @@ function AddSingleQuestion() {
                 progress: undefined,
                 theme: "light",
             });
+            cart.RefreshCart();
         }
     }
     const [formData, setFormData] = useState({
@@ -80,6 +81,18 @@ function AddSingleQuestion() {
         e.preventDefault();
         cart.addQuestionToCart(formData)
         console.log(cart.items)
+        setFormData({
+            text: "",
+            Options1: "",
+            Options2: "",
+            Options3: "",
+            Options4: "",
+            answer: "",
+            licenseTypeId: "", // Assuming this is the initial value for the select field
+            paralysisQuestion: Boolean, // Assuming this is the initial value for the select field
+            image: "", // You may want to clear this field as well
+          });
+        
     }
     return (
         <>

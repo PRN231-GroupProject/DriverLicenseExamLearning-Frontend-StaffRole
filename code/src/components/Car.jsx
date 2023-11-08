@@ -7,9 +7,43 @@ import { GrUpdate } from "react-icons/gr";
 import { useNavigate } from 'react-router-dom';
 import { IoCreateSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
 const Car = () => {
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleOpen = () => setShowModal(true);
+  const [isDeleteCar, setIsDeleteCar] = useState();
   const navigate = useNavigate();
+  const handleDelete = (e) => {
+    handleOpen();
+    setIsDeleteCar(e);
+    console.log(e);
+  }
   const [Cars, setCars] = useState([])
+  const acceptConfirmDelete = () => {
+
+    const jwt = localStorage.getItem("jwt");
+    const responseData = axios.delete(`car?CarID=${isDeleteCar}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`
+      }
+    })
+    if (responseData.status == 200) {
+      handleClose();
+      toast.success('🦄 Wow so easy!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }
   const getCars = async () => {
     const jwt = localStorage.getItem("jwt");
     const responseCar = await axios.get("car", {
@@ -26,9 +60,22 @@ const Car = () => {
     getCars()
   }
     , [])
-  console.log(Cars)
   return (
     <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />
       <Header category="Page" title="Car">
       </Header>
       <div className='w-full pb-4'>
@@ -77,13 +124,13 @@ const Car = () => {
                 {car.carType}
               </td>
               <td className="px-6 py-4">
-                <button className='btn btn-warning'  onClick={() => {
-                  navigate("/UpdateCar", {state : { car : car}})
+                <button className='btn btn-warning' onClick={() => {
+                  navigate("/UpdateCar", { state: { car: car } })
                 }}
                 >
                   <GrUpdate />
                 </button>
-                <button className='btn btn-danger'>
+                <button className='btn btn-danger' onClick={() => handleDelete(car.carId)}>
                   <AiFillDelete />
                 </button>
               </td>
@@ -91,7 +138,24 @@ const Car = () => {
           ))}
         </tbody>
       </table>
-
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Delete User
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Do you really want to ban this use !!!!
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={() => handleClose()}>
+            Close
+          </Button>
+          <button className='btn btn-danger' onClick={acceptConfirmDelete}>
+            Delete
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }

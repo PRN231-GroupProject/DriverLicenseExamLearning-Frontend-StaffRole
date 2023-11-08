@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { useLocation } from "react-router-dom";
 import axios from '../api/axios';
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const LicenseApplicationDetail = () => {
+    const navigate = useNavigate();
     const [submitLicenseApplication, setSubmitLicenseApplication] = useState({
         "licenseTypeID": '',
         "userID": '',
@@ -40,6 +42,7 @@ const LicenseApplicationDetail = () => {
                 progress: undefined,
                 theme: "light",
             });
+            navigate("/LicenseApplication")
         }
 
     }

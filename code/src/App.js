@@ -2,9 +2,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login, Main } from "./pages";
 import React from 'react'
 import { UseStateContext } from "./context/ContextProvider";
-import { Sidebar, Navbar, Member, Mentor, Car, QuestionBank, Quiz, MentorApplication, LicenseApplication, Package, AddQuestion, AddSingleQuestion, ViewMemberDetail, UpdateMember, UpdateCar, AddNewCar, AddNewPackage, MentorApplicationDetail, LicenseApplicationDetail } from "./components";
+import { Sidebar, Navbar, Member, Mentor, Car, QuestionBank, Quiz, MentorApplication, LicenseApplication, Package, AddQuestion, AddSingleQuestion, ViewMemberDetail, UpdateMember, UpdateCar, AddNewCar, AddNewPackage, MentorApplicationDetail, LicenseApplicationDetail, Question } from "./components";
 import CartProvider from './context/CartContextProvider';
 import ExamProvider from "./context/ExamContextProvider";
+import ExamDetail from "./components/ExamDetail";
 const App = () => {
 
   const { activeMenu, activeLogin } = UseStateContext()
@@ -47,6 +48,8 @@ const App = () => {
                     <Route path='/AddNewPackage' element={(<AddNewPackage />)} />
                     <Route path='/MentorApplicationDetail' element={(<MentorApplicationDetail />)} />
                     <Route path='/LicenseApplicationDetail' element={(<LicenseApplicationDetail />)} />
+                    <Route path='/ExamDetail' element={(<ExamDetail />)} />
+                    <Route path='/Question' element={(<Question />)} />
 
                   </Routes>
                 </div>

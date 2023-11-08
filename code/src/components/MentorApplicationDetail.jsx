@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import axios from '../api/axios';
 import { ToastContainer, toast } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
 const MentorApplicationDetail = () => {
+    const navigate = useNavigate();
     const location = useLocation()
     const [mentorInfo, setMentorInfo] = useState(location.state.mentorDetail);
     const [submitMentorApplication, SetSubmitMentorApplication] = useState({
@@ -28,14 +29,14 @@ const MentorApplicationDetail = () => {
         console.log(submitMentorApplication)
 
         const jwt = localStorage.getItem("jwt");
-        const responseSubmitMentorApplication = await axios.post("/mentor-application", {
+        const responseSubmitMentorApplication = await axios.post("/mentor-application", submitMentorApplication, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${jwt}`
             }
         })
         if (responseSubmitMentorApplication.status == 200) {
-            toast.success('🦄 Wow so easy!', {
+            toast.success(`🤨 ${responseSubmitMentorApplication.data.message}`, {
                 position: "top-right",
                 autoClose: 100,
                 hideProgressBar: false,
@@ -45,6 +46,7 @@ const MentorApplicationDetail = () => {
                 progress: undefined,
                 theme: "light",
             });
+            navigate("/MentorApplication");
         }
 
     }

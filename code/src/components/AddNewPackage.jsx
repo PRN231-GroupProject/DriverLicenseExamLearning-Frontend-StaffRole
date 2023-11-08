@@ -23,26 +23,41 @@ const AddNewPackage = () => {
   }
 
   const AddPackage = async () => {
-    const jwt = localStorage.getItem("jwt");
-    const responseAddPackage = await axios.post("/package", Package, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`
-      },
+    try {
 
-    })
-    console.log("hi")
-    if (responseAddPackage.status == 200) {
-      toast.success('🦄 Wow so easy!', {
-        position: "top-right",
-        autoClose: 100,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+
+      const jwt = localStorage.getItem("jwt");
+      const responseAddPackage = await axios.post("/package", Package, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwt}`
+        },
+      })
+      if (responseAddPackage.status == 200) {
+        toast.success('🦄 Wow so easy!', {
+          position: "top-right",
+          autoClose: 100,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+
+    } catch (error) {
+     
+      toast.error('🙊 Check your data again ', {
+              position: "top-right",
+              autoClose: 100,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            })
     }
   }
   const onChange = (e) => {
@@ -74,7 +89,7 @@ const AddNewPackage = () => {
               onChange={onChange}
               id="first_name"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="type package name " required />
+              placeholder="type package name  " required />
           </div>
           <div>
             <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Price </label>
@@ -85,7 +100,7 @@ const AddNewPackage = () => {
               type="number"
               id="last_name"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="type price" required />
+            placeholder="type price(500,000 ~ 20,0000,000)" required />
           </div>
           <div>
             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Package Type Name</label>

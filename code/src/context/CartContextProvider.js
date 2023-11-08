@@ -9,7 +9,9 @@ export const QuestionContext = createContext({
     deleteFromCart: () => { },
     getTotalCart: () => { },
     addQuestionToCart: () => { },
-    CheckQuestionHaveInCart: () => { }
+    CheckQuestionHaveInCart: () => { },
+    RefreshCart: () => { }
+
 });
 
 
@@ -40,7 +42,7 @@ export function CartProvider({ children }) {
                     }
                 ]
             )
-        }else {
+        } else {
 
             toast.error('🦄 This question already have in cart', {
                 position: "top-right",
@@ -51,11 +53,11 @@ export function CartProvider({ children }) {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                });
-       
-       
-       
-            }
+            });
+
+
+
+        }
         // const location = useLocation()
         // const state = location.state
 
@@ -86,13 +88,18 @@ export function CartProvider({ children }) {
                     return currentProduct.question.text != question
                 }))
     }
+
+    function RefreshCart() {
+        setCartProducts([]);
+    }
     const contextValue = {
         items: cartProducts,
         getQuestionQuantity,
         deleteFromCart,
         getTotalCart,
         addQuestionToCart,
-        CheckQuestionHaveInCart
+        CheckQuestionHaveInCart,
+        RefreshCart,
     }
     return (
         <QuestionContext.Provider value={contextValue}>

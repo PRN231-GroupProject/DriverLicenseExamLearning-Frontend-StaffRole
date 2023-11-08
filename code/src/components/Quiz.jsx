@@ -1,11 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header } from '../components'
 import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
+import axios from '../api/axios';
+import { CgDetailsMore } from "react-icons/cg";
+import { useNavigate } from 'react-router-dom';
 const Quiz = () => {
-
+  const navigate = useNavigate();
+  const [Quiz, setQuiz] = useState([]);
   const [isOpen, setIsOpen] = useState(false)
   const [licenseType, setLicenseType] = useState('');
   const [searchValue, setSearchValue] = useState('');
+  const getQuiz = async () => {
+    const jwt = localStorage.getItem("jwt");
+    const responseQuiz = await axios.get("exam/GetQuizByStaff?$select=licenseTypeId,name&$expand=examQueries", {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`
+      }
+    });
+    console.log(responseQuiz.data)
+    setQuiz(responseQuiz.data)
+
+
+  }
+  useEffect(() => {
+    getQuiz();
+  }, [])
   return (
 
     <div className='m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl'>
@@ -67,23 +87,29 @@ const Quiz = () => {
           </tr>
         </thead>
         <tbody>
-          <tr key="1" className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-            <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              1
-            </td>
-            <td className="px-6 py-4">
-              Toi tin minh dang
-            </td>
-            <td className="px-6 py-4">
-              A2
-            </td>
-            <td className="px-6 py-4">
-              Active
-            </td>
-            <td className="px-6 py-4">
-              <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Detail</a>
-            </td>
-          </tr>
+          {Quiz.map((quiz) => (
+            quiz.examQueries.map((detail, index) => (
+              <tr key={index} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {detail.ExamId}
+                </td>
+                <td className="px-6 py-4">
+                  {detail.ExamName}
+                </td>
+                <td className="px-6 py-4">
+                  {quiz.Name}
+                </td>
+                <td className="px-6 py-4">
+                  Active
+                </td>
+                <td className="px-6 py-4">
+                  <button className='btn btn-info' onClick={() => (navigate("/ExamDetail", { state: { examId: detail.ExamId } }))}>
+                    <CgDetailsMore />
+                  </button>
+                </td>
+              </tr>
+            ))
+          ))}
         </tbody>
       </table>
 

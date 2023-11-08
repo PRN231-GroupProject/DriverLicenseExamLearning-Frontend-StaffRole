@@ -40,9 +40,9 @@ export function ExamProvider({ children }) {
     }
     function addQuestionToExam(question) {
         console.log(question)
-        
+
         if (licenseTypeID != question.licenseTypeId) {
-            toast.error('🦄 Set License Type First Or You Add have another License Type ', {
+            toast.error('🐞 Set License Type First Or You Add have another License Type ', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -56,7 +56,16 @@ export function ExamProvider({ children }) {
         } else {
             const check = CheckQuestionHaveInCart(question.text);
             if (check == 0) {
-
+                toast('📥 Add Successfully', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
                 console.log(question)
                 setCartProducts(
                     [
@@ -69,7 +78,7 @@ export function ExamProvider({ children }) {
                 )
             } else {
 
-                toast.error('🦄 This question already have in cart', {
+                toast.error(' 👽 This question already have in cart', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,

@@ -8,12 +8,12 @@ function MemberTransactionDetail(props) {
   return (
     <>
       {transactionList.map((transaction) => (
-        <div key={transaction.transactionId}>
-          <h3>Transaction ID : {transaction.transactionId}</h3>
-          <h3>Total : {transaction.total}</h3>
-          <h3> Status: {transaction.status}</h3>
-          <h3> Transaction Type: {transaction.transactionType}</h3>
-        <h3>+++++++++++++++++++++</h3>
+        <div className='text-2xl' key={transaction.transactionId}>
+          <h3 className='text-2xl'>Transaction ID : {transaction.transactionId}</h3>
+          <h3 className='text-2xl'>Total : {transaction.total}</h3>
+          <h3 className='text-2xl'> Status: {transaction.status}</h3>
+          <h3 className='text-2xl'> Transaction Type: {transaction.transactionType}</h3>
+
         </div>
       ))}
     </>

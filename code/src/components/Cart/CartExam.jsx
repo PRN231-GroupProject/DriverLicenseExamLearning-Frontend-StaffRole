@@ -13,7 +13,7 @@ export function CartExam(props) {
     const paralysisQuestion = props.question.paralysisQuestion;
 
     return (
-        <div>
+        <div className=' '>
             <div>Question: {question}</div>
             <div>Option 1 : {option1}</div>
             <div>Option 2 : {option2}</div>

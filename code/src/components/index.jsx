@@ -20,4 +20,6 @@ export {default as AddNewPackage } from '../components/AddNewPackage'
 export {default as MemberTransactionDetail} from '../components/MemberTransactionDetail'
 export {default as MentorApplicationDetail} from '../components/MentorApplicationDetail'
 export {default as LicenseApplicationDetail} from '../components/LicenseApplicationDetail'
+export {default as ExamDetail} from '../components/ExamDetail'
+export {default as Question} from '../components/Question'
 

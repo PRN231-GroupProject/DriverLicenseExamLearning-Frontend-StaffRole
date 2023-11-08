@@ -104,16 +104,16 @@ const ViewMemberDetail = () => {
                                 disabled />
                         </div>
                     </div>
+                    {countTransaction > 0 ?
+                        <>
+                            <h3 className='text-blue-600/100 text-5xl'>This use have: {countTransaction}</h3>
+                            <MemberTransactionDetail transaction={TransactionGet}></MemberTransactionDetail>
+                        </> :
+                        <h3>
+                            Don't have any Transaction
+                        </h3>}
                 </form >
             </div>
-            {countTransaction > 0 ?
-                <>
-                    <h3>This use have {countTransaction}</h3>
-                    <MemberTransactionDetail transaction={TransactionGet}></MemberTransactionDetail>
-                </> :
-                <h3>
-                    Don't have any Transaction
-                </h3>}
         </>
     )
 }

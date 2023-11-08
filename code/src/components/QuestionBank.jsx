@@ -4,13 +4,14 @@ import { AiOutlineCaretUp, AiOutlineCaretDown } from "react-icons/ai";
 import { FcAddDatabase, FcDeleteDatabase } from "react-icons/fc";
 import { MdOutlineAdd } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { IoCreateSharp } from "react-icons/io5";
 import { ExamContext } from "../context/ExamContextProvider";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer ,toast } from "react-toastify";
 import axios from '../api/axios';
 const QuestionBank = () => {
   //? Fetch data in api 
+  const navigate = useNavigate();
   const [Questions, setQuestions] = useState([])
   const getQuestionBanks = async () => {
     const jwt = localStorage.getItem("jwt");
@@ -156,8 +157,8 @@ const QuestionBank = () => {
                 <td className="px-6 py-4">
                   {question.answer}
                 </td>
-                <td className="px-6 py-4">
-                  <button className='btn btn-success'>
+                <td className="px-6 py-4 flex gap-3">
+                  <button className='btn btn-success' onClick={() => { navigate("/Question", { state: { question: question } }) }}>
                     <CgDetailsMore />
                   </button>
                   <button className='btn btn-info'
