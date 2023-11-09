@@ -45,6 +45,9 @@ const MentorApplication = () => {
                 Gmail
               </th>
               <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Action
               </th>
             </tr>
@@ -63,6 +66,9 @@ const MentorApplication = () => {
                 </td>
                 <td className="px-6 py-4">
                   {mentor.email}
+                </td>
+                <td className="px-6 py-4">
+                  {mentor.stauts}
                 </td>
                 <td className="px-6 py-4">
                   <button className='btn btn-info'  onClick={() => {

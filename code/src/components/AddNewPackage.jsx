@@ -34,7 +34,7 @@ const AddNewPackage = () => {
         },
       })
       if (responseAddPackage.status == 200) {
-        toast.success('🦄 Wow so easy!', {
+        toast.success('🦄 Add Package Successfully', {
           position: "top-right",
           autoClose: 100,
           hideProgressBar: false,
@@ -44,6 +44,7 @@ const AddNewPackage = () => {
           progress: undefined,
           theme: "light",
         });
+        navigate("/Package");
       }
 
     } catch (error) {

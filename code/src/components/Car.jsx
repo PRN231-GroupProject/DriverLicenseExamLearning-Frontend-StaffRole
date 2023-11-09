@@ -123,7 +123,7 @@ const Car = () => {
               <td className="px-6 py-4">
                 {car.carType}
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 flex gap-3">
                 <button className='btn btn-warning' onClick={() => {
                   navigate("/UpdateCar", { state: { car: car } })
                 }}

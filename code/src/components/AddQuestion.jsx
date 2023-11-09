@@ -5,7 +5,9 @@ import { CartExam } from './Cart/CartExam';
 import { MdAddTask } from "react-icons/md";
 import axios from '../api/axios';
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const AddQuestion = () => {
+  const navigate = useNavigate();
   const cart = useContext(ExamContext);
   const questionCount = cart.items.reduce((sum, question) => sum += question.quantity, 0);
   const [QuestionInfo, setQuestionInfo] = useState({
@@ -60,6 +62,8 @@ const AddQuestion = () => {
         progress: undefined,
         theme: "light",
       });
+      cart.refreshCart();
+      navigate("/Quiz");
     }
   }
   return (

@@ -12,6 +12,7 @@ export const ExamContext = createContext({
     CheckQuestionHaveInList: () => { },
     getLicenseType: () => { },
     setLicenseType: () => { },
+    refreshCart: () => { },
 
 });
 
@@ -108,7 +109,9 @@ export function ExamProvider({ children }) {
     }
 
 
-
+    function refreshCart() {
+        setCartProducts([]);
+    }
     function deleteFromCart(question) {
         console.log(question)
         setCartProducts(
@@ -125,7 +128,8 @@ export function ExamProvider({ children }) {
         addQuestionToExam,
         CheckQuestionHaveInCart,
         getLicenseType,
-        setLicenseType
+        setLicenseType,
+        refreshCart,
     }
     return (
         <ExamContext.Provider value={contextValue}>

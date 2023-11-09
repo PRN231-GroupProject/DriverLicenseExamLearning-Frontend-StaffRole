@@ -13,7 +13,7 @@ function MemberTransactionDetail(props) {
           <h3 className='text-2xl'>Total : {transaction.total}</h3>
           <h3 className='text-2xl'> Status: {transaction.status}</h3>
           <h3 className='text-2xl'> Transaction Type: {transaction.transactionType}</h3>
-
+          <h2>++++++++++++++++++++++</h2>
         </div>
       ))}
     </>

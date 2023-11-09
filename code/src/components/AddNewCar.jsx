@@ -90,9 +90,9 @@ const AddNewCar = () => {
             value={Car.carType}
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option selected>Choose a type</option>
-            <option value="Honda">Honda </option>
-            <option value="KIA Afternoon">KIA Afternoon</option>
-            <option value="Toyotao">Toyotao</option>
+            <option value="Honda">Honda</option>
+            <option value="KIA Morning">KIA</option>
+            <option value="Toyota">Toyota</option>
             <option value="Mazda">Mazda</option>
           </select>
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Car Image</label>

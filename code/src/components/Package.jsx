@@ -5,8 +5,10 @@ import { AiFillDelete } from "react-icons/ai";
 import { CgDetailsMore } from "react-icons/cg";
 import { GrUpdate } from "react-icons/gr";
 import { IoCreateSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link   } from "react-router-dom";
+
 const Package = () => {
+
   const [Packages, setPackages] = useState([]);
   const getPackages = async () => {
     const jwt = localStorage.getItem("jwt");
@@ -74,7 +76,7 @@ const Package = () => {
                 <td className="px-6 py-4">
                   {Ispackage.price}
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 flex gap-3">
                   <button className='btn btn-warning'>
                     <GrUpdate />
                   </button>

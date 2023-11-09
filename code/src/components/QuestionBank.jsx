@@ -152,7 +152,7 @@ const QuestionBank = () => {
                   {question.text}
                 </td>
                 <td className="px-6 py-4">
-                  {question.licenseTypeId}
+                  {licensetype.name}
                 </td>
                 <td className="px-6 py-4">
                   {question.answer}
